@@ -1,0 +1,29 @@
+# Загальні виключення
+node_modules/
+dist/
+build/
+.env
+*.log
+
+# Docker
+Dockerfile.dev
+*.dockerignore
+# docker-compose*.yml
+
+# IDE та редактори
+.vscode/
+.idea/
+
+# Тимчасові файли
+*.tmp
+*.bak
+
+# frontend/node_modules/
+# frontend/dist/
+# frontend/build/
+# frontend/.env
+# frontend/.vscode/
+
+# backend/api_microservice/node_modules/
+# backend/api_microservice/package-lock.json/
+
