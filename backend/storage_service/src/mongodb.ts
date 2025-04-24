@@ -76,42 +76,13 @@ const ticketSchema = new mongoose.Schema({
 });
 export const TicketModel = mongoose.model('Ticket', ticketSchema);
 
+// @TODO В подальшому можливість формувати відсортовані і відфільтровані дані в самому запиті в монгу
 export async function getRandomTickets(
     limit: number = 10,
     filter: FilterOptions = {},
     sort: SortOptions = { sortBy: 'cheapest' }
 ): Promise<Ticket[]> {
-    console.log('GETRANDOM', limit, filter, sort);
     const pipeline: any[] = [];
-
-    // if (filter.stops && filter.stops.length > 0) {
-    //     pipeline.push({
-    //         $match: {
-    //             $and: [
-    //                 { 'segments.0.stopsCount': { $in: filter.stops } },
-    //                 { 'segments.1.stopsCount': { $in: filter.stops } },
-    //             ],
-    //         },
-    //     });
-    // }
-
-    // if (sort.sortBy === 'fastest') {
-    //     pipeline.push({
-    //         $addFields: {
-    //             totalDuration: {
-    //                 $sum: ['$segments.0.duration', '$segments.1.duration'],
-    //             },
-    //         },
-    //     });
-    // }
-
-    // if (sort.sortBy === 'cheapest') {
-    //     pipeline.push({ $sort: { price: 1 } });
-    // } else if (sort.sortBy === 'fastest') {
-    //     pipeline.push({ $sort: { totalDuration: 1 } });
-    // } else if (sort.sortBy === 'optimal') {
-    //     pipeline.push({ $sort: { price: 1 } });
-    // }
 
     pipeline.push({ $sample: { size: limit } });
 

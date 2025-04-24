@@ -7,17 +7,11 @@ import { Ticket } from '../types/ticket.js';
 import { TicketsResponse } from '../types/ticket.js';
 
 export const searchHandler: RequestHandler = async (req, res) => {
-    console.log('SEARCH');
     const searchId = uuidv4();
-    console.log('SEARCH ID', searchId);
 
     try {
         const tickets: Ticket[] = await sendToQueue<Ticket[]>('storage_queue', {
             action: 'getRandomTickets',
-        });
-        console.log('🟡 Sending to cache_create_queue', {
-            searchId,
-            ticketsLength: tickets.length,
         });
         await sendToQueue('cache_create_queue', { searchId, tickets });
         res.json({ searchId });

@@ -46,9 +46,6 @@ export async function sendToQueue<T>(
                 replyQueue.queue,
                 msg => {
                     if (msg === null) {
-                        console.log(
-                            `Consumer cancelled for queue: ${replyQueue.queue}`
-                        );
                         reject(new Error('Consumer cancelled'));
                         return;
                     }
@@ -90,9 +87,6 @@ export async function sendToQueue<T>(
                 correlationId,
                 replyTo: replyQueue.queue,
             });
-            console.log(
-                `Sent message to queue: ${queue}, correlationId: ${correlationId}, replyQueue: ${replyQueue.queue}`
-            );
         });
     } catch (error) {
         console.error(`Error in sendToQueue: ${(error as Error).message}`);

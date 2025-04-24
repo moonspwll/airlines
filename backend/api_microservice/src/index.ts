@@ -1,7 +1,7 @@
-import express, { Express, Request, Response, RequestHandler } from 'express';
+import express, { Express } from 'express';
 import cors from 'cors';
 
-import { connectRabbitMQ, sendToQueue } from './rabbitmq.js';
+import { connectRabbitMQ } from './rabbitmq.js';
 
 import routes from './routes/api.js';
 

@@ -1,12 +1,8 @@
 import amqp from 'amqplib';
 
-import { TicketModel, getRandomTickets } from './mongodb.js';
+import { getRandomTickets } from './mongodb.js';
 
 export async function connectRabbitMQ() {
-    console.log(
-        'Attempting to connect to RabbitMQ:',
-        process.env.RABBITMQ_URL || 'amqp://rabbitmq:5672'
-    );
     try {
         const connection = await amqp.connect(
             process.env.RABBITMQ_URL || 'amqp://rabbitmq:5672'
@@ -22,8 +18,6 @@ export async function connectRabbitMQ() {
         const channel = await connection.createChannel();
         await channel.assertQueue('storage_queue', { durable: true });
 
-        console.log('Storage RabbitMQ channel ready');
-
         await channel.consume(
             'storage_queue',
             async msg => {
@@ -33,11 +27,8 @@ export async function connectRabbitMQ() {
                 }
                 const { action } = JSON.parse(msg.content.toString());
                 if (action === 'getRandomTickets') {
-                    // console.log('TEST2');
                     const tickets = await getRandomTickets(Math.floor(Math.random() * 50));
-                    console.log(
-                        `Sending ${tickets.length} random tickets to ${msg.properties.replyTo}`
-                    );
+
                     channel.sendToQueue(
                         msg.properties.replyTo,
                         Buffer.from(JSON.stringify(tickets)),
