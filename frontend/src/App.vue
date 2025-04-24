@@ -21,63 +21,9 @@ import TicketsList from './components/TicketsList.vue';
 
 import { useTickets } from './composables/useTickets';
 
-interface Segment {
-    origin: string;
-    destination: string;
-    date: string; // ISO date string
-    stops: string[]; // Array of stop codes
-    duration: number; // Duration in minutes
-    _id: string;
-}
-
-interface Ticket {
-    _id: string;
-    price: number; // Price as a number
-    carrier: string; // Airline carrier code
-    segments: Segment[]; // Array of segments
-    __v: number; // Version key
-}
-
-// defineProps<{
-//   tickets: Ticket[];
-// }>();
-
-// const { tickets } = useTickets(stops, sortBy);
-// const filters = ref({ stops: [] }); // Наприклад, [0, 1, 2] для кількості пересадок
-// const sort = ref('cheapest'); // 'price' або 'duration'
-
 const sortBy = ref<'cheapest' | 'fastest' | 'optimal' | undefined>('cheapest');
-const stops = ref<string>(''); // Define stops as a reactive property
+const stops = ref<string>('');
 const { tickets } = useTickets(stops, sortBy);
-// watch(() => tickets.value, (newTickets) => {
-//   // Викликати фільтрацію та сортування при зміні списку квитків
-//   // filteredTickets.value = filterAndSortTickets(newTickets);
-// });
-// const filteredTickets = computed(() => {
-  // let result = tickets.value;
-
-  // // Фільтрація за пересадками
-  // if (filters.value.stops.length) {
-  //   result = result.filter((ticket) =>
-  //     filters.value.stops.includes(ticket.segments[0].stops.length) &&
-  //     filters.value.stops.includes(ticket.segments[1].stops.length)
-  //   );
-  // }
-
-  // // Сортування
-  // result = [...result].sort((a, b) => {
-  //   if (sort.value === 'price') return a.price - b.price;
-  //   if (sort.value === 'duration') {
-  //     const durationA = a.segments[0].duration + a.segments[1].duration;
-  //     const durationB = b.segments[0].duration + b.segments[1].duration;
-  //     return durationA - durationB;
-  //   }
-  //   return 0;
-  // });
-
-  // // Повертаємо перші 5 квитків
-  // return result.slice(0, 5);
-// });
 </script>
 <style scoped>
 .logo {

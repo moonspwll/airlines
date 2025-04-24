@@ -33,6 +33,7 @@ export async function connectRabbitMQ() {
                 }
                 const { action } = JSON.parse(msg.content.toString());
                 if (action === 'getRandomTickets') {
+                    // console.log('TEST2');
                     const tickets = await getRandomTickets(Math.floor(Math.random() * 50));
                     console.log(
                         `Sending ${tickets.length} random tickets to ${msg.properties.replyTo}`

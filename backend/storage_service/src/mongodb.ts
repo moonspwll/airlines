@@ -81,44 +81,39 @@ export async function getRandomTickets(
     filter: FilterOptions = {},
     sort: SortOptions = { sortBy: 'cheapest' }
 ): Promise<Ticket[]> {
-    // Формуємо агрегаційний пайплайн
+    console.log('GETRANDOM', limit, filter, sort);
     const pipeline: any[] = [];
 
-    // Фільтр за кількістю пересадок
-    if (filter.stops && filter.stops.length > 0) {
-        pipeline.push({
-            $match: {
-                $and: [
-                    { 'segments.0.stopsCount': { $in: filter.stops } },
-                    { 'segments.1.stopsCount': { $in: filter.stops } },
-                ],
-            },
-        });
-    }
+    // if (filter.stops && filter.stops.length > 0) {
+    //     pipeline.push({
+    //         $match: {
+    //             $and: [
+    //                 { 'segments.0.stopsCount': { $in: filter.stops } },
+    //                 { 'segments.1.stopsCount': { $in: filter.stops } },
+    //             ],
+    //         },
+    //     });
+    // }
 
-    // Додаємо поле для суми тривалостей (для сортування за "найшвидший")
-    if (sort.sortBy === 'fastest') {
-        pipeline.push({
-            $addFields: {
-                totalDuration: {
-                    $sum: ['$segments.0.duration', '$segments.1.duration'],
-                },
-            },
-        });
-    }
+    // if (sort.sortBy === 'fastest') {
+    //     pipeline.push({
+    //         $addFields: {
+    //             totalDuration: {
+    //                 $sum: ['$segments.0.duration', '$segments.1.duration'],
+    //             },
+    //         },
+    //     });
+    // }
 
-    // Сортування
-    if (sort.sortBy === 'cheapest') {
-        pipeline.push({ $sort: { price: 1 } });
-    } else if (sort.sortBy === 'fastest') {
-        pipeline.push({ $sort: { totalDuration: 1 } });
-    } else if (sort.sortBy === 'optimal') {
-        // Заглушка: сортування за ціною як приклад
-        pipeline.push({ $sort: { price: 1 } });
-    }
+    // if (sort.sortBy === 'cheapest') {
+    //     pipeline.push({ $sort: { price: 1 } });
+    // } else if (sort.sortBy === 'fastest') {
+    //     pipeline.push({ $sort: { totalDuration: 1 } });
+    // } else if (sort.sortBy === 'optimal') {
+    //     pipeline.push({ $sort: { price: 1 } });
+    // }
 
-    // Випадкова вибірка (10 квитків для прикладу)
-    pipeline.push({ $sample: { size: 10 } });
+    pipeline.push({ $sample: { size: limit } });
 
     const tickets = await TicketModel.aggregate<Ticket>(pipeline).exec();
     return tickets;
