@@ -11,25 +11,25 @@
 import { ref } from 'vue';
 
 interface Tab {
-  id: 'cheapest' | 'fastest' | 'optimal';
-  label: string;
+    id: 'cheapest' | 'fastest' | 'optimal';
+    label: string;
 }
 
 const tabs: Tab[] = [
-  { id: 'cheapest', label: 'НАЙДЕШЕВШИЙ' },
-  { id: 'fastest', label: 'НАЙШВИДШИЙ' },
-  { id: 'optimal', label: 'ОПТИМАЛЬНИЙ' },
+    { id: 'cheapest', label: 'НАЙДЕШЕВШИЙ' },
+    { id: 'fastest', label: 'НАЙШВИДШИЙ' },
+    { id: 'optimal', label: 'ОПТИМАЛЬНИЙ' },
 ];
 
 const activeTab = ref<string>('cheapest');
 
 const emit = defineEmits<{
-  (e: 'update:sortBy', sortBy: 'cheapest' | 'fastest' | 'optimal'): void;
+    (e: 'update:sortBy', sortBy: 'cheapest' | 'fastest' | 'optimal'): void;
 }>();
 
 const setActiveTab = (tabId: Tab['id']): void => {
-  activeTab.value = tabId;
-  emit('update:sortBy', tabId);
+    activeTab.value = tabId;
+    emit('update:sortBy', tabId);
 };
 </script>
 
@@ -42,7 +42,6 @@ const setActiveTab = (tabId: Tab['id']): void => {
     max-width: 100%;
     box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.49);
     margin-bottom: 16px;
-    /* box-sizing: border-box; */
 }
 
 .tab-button {

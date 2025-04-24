@@ -27,30 +27,30 @@ const { tickets } = useTickets(stops, sortBy);
 </script>
 <style scoped>
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
 }
 
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+    filter: drop-shadow(0 0 2em #646cffaa);
 }
 
 .logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+    filter: drop-shadow(0 0 2em #42b883aa);
 }
 
 .container {
-  min-width: 960px;
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: row;
-  flex-wrap: wrap;
+    min-width: 960px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .main {
-  flex: 1;
-  margin-left: 16px;
+    flex: 1;
+    margin-left: 16px;
 }
 </style>
